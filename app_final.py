@@ -103,7 +103,8 @@ def analyze():
         **Instructions:**
         1.  **Analyze the Resume:** First, thoroughly read and understand the candidate's experience, skills, and projects listed in the resume text below.
         2.  **Analyze the Job Description:** Next, carefully examine the 'Required Qualifications' and 'Key Responsibilities' from the job description text.
-        3.  **Identify Skill Gaps:** Create a list of the most critical skills and qualifications that are explicitly mentioned in the job description but are NOT present or well-supported in the resume. For each gap, briefly explain why it's important for the role.
+        3.  **Identify Skill Gaps:** First, create a table(in markdown) where we quickly check the job requirements are met or not one by one, the first column of the table should contain the job reuirements and the second column should contain whether the job requirement is met or not(include a tick, cross emojis along with the condition respectively and also include an appropriate emoji for the ambiguity states). 
+              Next, Create a list of the most critical skills and qualifications that are explicitly mentioned in the job description but are NOT present or well-supported in the resume. For each gap, briefly explain why it's important for the role.
         4.  **Create a Learning Path:** For each identified skill gap, create a concrete, step-by-step learning plan. This plan should have a timeline (e.g., Week 1-2, Month 2-3) and include specific, actionable recommendations.
         5.  **Suggest a Project:** Recommend one specific portfolio project that the candidate could build to demonstrate multiple missing skills at once.
 
