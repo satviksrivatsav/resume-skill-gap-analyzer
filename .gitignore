@@ -4,3 +4,4 @@ __pycache__/
 .qodo/
 test/
 *.python
+key.txt

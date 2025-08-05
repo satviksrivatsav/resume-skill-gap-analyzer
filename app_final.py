@@ -3,7 +3,7 @@ import tempfile
 from flask import Flask, render_template, request
 import google.generativeai as genai
 from dotenv import load_dotenv
-from markdown_it import MarkdownIt
+import markdown
 from docx import Document
 import PyPDF2
 
@@ -13,8 +13,7 @@ load_dotenv()
 # Initialize the Flask application
 app = Flask(__name__)
 
-# Initialize Markdown-it
-md = MarkdownIt()
+# No markdown-it initialization needed, using markdown library instead
 
 def extract_text_from_docx(file):
     """Extract text content from .docx files"""
@@ -42,7 +41,6 @@ def extract_text_from_pdf(file):
 def process_file_content(file):
     """Process uploaded file and return text content"""
     filename = file.filename.lower()
-    
     if filename.endswith('.docx'):
         return extract_text_from_docx(file)
     elif filename.endswith('.pdf'):
@@ -52,7 +50,7 @@ def process_file_content(file):
     else:
         try:
             return file.read().decode('utf-8')
-        except:
+        except Exception:
             raise Exception(f"Unsupported file format: {filename}")
 
 @app.after_request
@@ -103,7 +101,7 @@ def analyze():
         **Instructions:**
         1.  **Analyze the Resume:** First, thoroughly read and understand the candidate's experience, skills, and projects listed in the resume text below.
         2.  **Analyze the Job Description:** Next, carefully examine the 'Required Qualifications' and 'Key Responsibilities' from the job description text.
-        3.  **Identify Skill Gaps:** First, create a table(in markdown) where we quickly check the job requirements are met or not one by one, the first column of the table should contain the job reuirements and the second column should contain whether the job requirement is met or not(include a tick, cross emojis along with the condition respectively and also include an appropriate emoji for the ambiguity states). 
+        3.  **Identify Skill Gaps:** First, give a quick score of eligibilty(for 100) in the format 'Eligibilty Score: <score in bold text>', then create a table(in markdown) where we quickly check the job requirements are met or not one by one, the first column of the table should contain the job reuirements and the second column should contain whether the job requirement is met or not(include a tick, cross emojis along with the condition respectively and also include an appropriate emoji for the ambiguity states). 
               Next, Create a list of the most critical skills and qualifications that are explicitly mentioned in the job description but are NOT present or well-supported in the resume. For each gap, briefly explain why it's important for the role.
         4.  **Create a Learning Path:** For each identified skill gap, create a concrete, step-by-step learning plan. This plan should have a timeline (e.g., Week 1-2, Month 2-3) and include specific, actionable recommendations.
         5.  **Suggest a Project:** Recommend one specific portfolio project that the candidate could build to demonstrate multiple missing skills at once.
@@ -135,8 +133,8 @@ def analyze():
         # Generate content using the prompt and the extracted text
         response = model.generate_content(prompt)
         
-        # Convert markdown response to HTML
-        html_response = md.render(response.text)
+        # Convert markdown response to HTML using markdown library with tables extension
+        html_response = markdown.markdown(response.text, extensions=['tables'])
         
         # Render the template with the response
         return render_template('index_final.html', response=html_response)

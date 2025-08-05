@@ -14,7 +14,7 @@
             color: #212529; 
         }
         .container { 
-            max-width: 800px; 
+            max-width: 1000px; 
             margin: auto; 
             background-color: #fff; 
             padding: 2em; 
@@ -84,6 +84,31 @@
             color: #6c757d;
             text-align: right;
         }
+        .table-container table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+            font-size: 0.95em;
+        }
+        .table-container th, .table-container td {
+            border: 1px solid #dee2e6;
+            padding: 0.75em 1em;
+            vertical-align: middle;
+        }
+        .table-container th {
+            background-color: #e9ecef;
+            text-align: left;
+            font-weight: 600;
+        }
+        .table-container td:nth-child(2) {
+            text-align: center;
+            font-size: 1.2em;
+            vertical-align: middle;
+            white-space: nowrap;
+        }
+        .table-container tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
     </style>
 </head>
 <body>
@@ -120,7 +145,14 @@
         </form>
 
         {% if error %}<p class="error"><strong>Error:</strong> {{ error }}</p>{% endif %}
-        {% if response %}<h2>Analysis Result:</h2><div class="response">{{ response | safe }}</div>{% endif %}
+        {% if response %}
+        <h2>Analysis Result:</h2>
+        <div class="response">
+            <div class="table-container">
+                {{ response | safe }}
+            </div>
+        </div>
+        {% endif %}
     </div>
 
     <script>
