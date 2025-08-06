@@ -93,7 +93,7 @@ def analyze():
         model = genai.GenerativeModel('gemini-1.5-flash-latest')
 
         # Build the prompt with optional custom prompt
-        base_prompt = prompt = f"""
+        base_prompt = f"""
         **Your Role:** You are an expert career coach and professional technical recruiter. Your goal is to provide a highly detailed and actionable analysis for a job applicant.
 
         **Your Task:** Meticulously compare the provided Resume against the Job Description. Your analysis must be direct, honest, and encouraging.
